@@ -32,7 +32,7 @@ index 0000000000000000000000000000000000000000..e8af7f56c5fa7ed2d71078387ea64c4e
 +    }
 +}
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 44aae845da6cd34fc00e0c71795d6f610679bd4b..534c3669edc413d5fe10ddc7820d71ffc366c2da 100644
+index 44aae845da6cd34fc00e0c71795d6f610679bd4b..9157d04cdec427f7376fbe478a0860b082759770 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -455,54 +455,55 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
@@ -88,7 +88,7 @@ index 44aae845da6cd34fc00e0c71795d6f610679bd4b..534c3669edc413d5fe10ddc7820d71ff
 -                //}
 -
 -                // return false;
-+                if (me.earthme.luminol.config.modules.optimizations.HopperOptimizationConfig.enabled) hopperPush(world, iinventory, enumdirection, blockEntity);
++                if (me.earthme.luminol.config.modules.optimizations.HopperOptimizationConfig.enabled) return hopperPush(world, iinventory, enumdirection, blockEntity);
 +                for (int i = 0; i < blockEntity.getContainerSize(); ++i) {
 +                    ItemStack itemstack = blockEntity.getItem(i);
 +
