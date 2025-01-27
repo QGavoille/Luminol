@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Quentin GAVOILLE <quentin.gavoille@gmail.com>
+Date: Mon, 27 Jan 2025 00:01:01 +0100
+Subject: [PATCH] Toggle Hopper Optimization
+
+
+diff --git a/src/main/java/me/earthme/luminol/config/modules/optimizations/HopperOptimizationConfig.java b/src/main/java/me/earthme/luminol/config/modules/optimizations/HopperOptimizationConfig.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..e8af7f56c5fa7ed2d71078387ea64c4ed5488276
+--- /dev/null
++++ b/src/main/java/me/earthme/luminol/config/modules/optimizations/HopperOptimizationConfig.java
+@@ -0,0 +1,21 @@
++package me.earthme.luminol.config.modules.optimizations;
++
++import me.earthme.luminol.config.ConfigInfo;
++import me.earthme.luminol.config.EnumConfigCategory;
++import me.earthme.luminol.config.IConfigModule;
++
++public class HopperOptimizationConfig implements IConfigModule {
++    @ConfigInfo(baseName = "enabled", comments = """
++        Option to enable Paper hopper optmizations""")
++    public static boolean enabled = true;
++
++    @Override
++    public EnumConfigCategory getCategory() {
++        return EnumConfigCategory.OPTIMIZATIONS;
++    }
++
++    @Override
++    public String getBaseName() {
++        return "optimize_hoppers";
++    }
++}
