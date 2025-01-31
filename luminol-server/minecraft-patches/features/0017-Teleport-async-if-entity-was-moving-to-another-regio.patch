@@ -5,7 +5,7 @@ Subject: [PATCH] Teleport async if entity was moving to another region at once
 
 
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 4cfc228a60a147409b8afc4cb138ce6437a9b667..c87db2d497ca9ed2e8aad5f1bc52555ff0952b80 100644
+index c9730114f1d5dc1ecd6a38dbc7e5e936065dd92b..1868cb351d030d1997b5c81a184657085261c2f3 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
 @@ -1099,6 +1099,10 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
