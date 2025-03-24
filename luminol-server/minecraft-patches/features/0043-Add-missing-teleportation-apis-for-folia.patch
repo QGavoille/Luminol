@@ -19,10 +19,10 @@ index 9fd3fe181df2ce6dbe695f6463d3940ac4c01167..822d401150d3764004b2570da828b4f6
              );
          });
 diff --git a/net/minecraft/world/entity/Entity.java b/net/minecraft/world/entity/Entity.java
-index 2f1aba87ced82e592511cebc24295aac95d71aaf..3aee378b03db39dd49a7afe5e762e0639ba17b26 100644
+index 3ad00cc095588574218ca6d729ead119403202e0..ccf1914b4f48ecc0f4fe980510f42d5415ec1daa 100644
 --- a/net/minecraft/world/entity/Entity.java
 +++ b/net/minecraft/world/entity/Entity.java
-@@ -4166,6 +4166,31 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -4160,6 +4160,31 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
          }
  
          // TODO any events that can modify go HERE
@@ -54,7 +54,7 @@ index 2f1aba87ced82e592511cebc24295aac95d71aaf..3aee378b03db39dd49a7afe5e762e063
  
          // check for same region
          if (destination == this.level()) {
-@@ -4282,7 +4307,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -4276,7 +4301,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
              // we just select the spawn position
              case END: {
                  if (destination.getTypeKey() == net.minecraft.world.level.dimension.LevelStem.END) {
@@ -74,7 +74,7 @@ index 2f1aba87ced82e592511cebc24295aac95d71aaf..3aee378b03db39dd49a7afe5e762e063
                      // need to load chunks so we can create the platform
                      destination.moonrise$loadChunksAsync(
                          targetPos, 16, // load 16 blocks to be safe from block physics
-@@ -4307,7 +4343,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -4301,7 +4337,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
                          }
                      );
                  } else {
@@ -94,7 +94,7 @@ index 2f1aba87ced82e592511cebc24295aac95d71aaf..3aee378b03db39dd49a7afe5e762e063
                      // need to load chunk for heightmap
                      destination.moonrise$loadChunksAsync(
                          spawnPos, 0,
-@@ -4357,8 +4404,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -4356,8 +4403,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
  
                  WorldBorder destinationBorder = destination.getWorldBorder();
                  double dimensionScale = net.minecraft.world.level.dimension.DimensionType.getTeleportationScale(origin.dimensionType(), destination.dimensionType());
@@ -114,7 +114,7 @@ index 2f1aba87ced82e592511cebc24295aac95d71aaf..3aee378b03db39dd49a7afe5e762e063
                  ca.spottedleaf.concurrentutil.completable.CallbackCompletable<BlockUtil.FoundRectangle> portalFound
                      = new ca.spottedleaf.concurrentutil.completable.CallbackCompletable<>();
  
-@@ -4495,9 +4552,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -4494,9 +4551,18 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
          if (!this.canPortalAsync(destination, takePassengers)) {
              return false;
          }
@@ -128,13 +128,13 @@ index 2f1aba87ced82e592511cebc24295aac95d71aaf..3aee378b03db39dd49a7afe5e762e063
 +        }
 +        // Luminol end
          // Kaiiju start - sync end platform spawning & entity teleportation
-         final java.util.function.Consumer<Entity> tpComplete = type == PortalType.END && destination.getTypeKey() == LevelStem.END ?
+         final java.util.function.Consumer<Entity> tpComplete = type == PortalType.END && destination.getTypeKey() == net.minecraft.world.level.dimension.LevelStem.END ?
 -              e -> net.minecraft.world.level.levelgen.feature.EndPlatformFeature.createEndPlatform(destination, ServerLevel.END_SPAWN_POINT.below(), true, null) : teleportComplete;
 +              e -> { if (new me.earthme.luminol.api.portal.EndPlatformCreateEvent().callEvent() && ca.spottedleaf.moonrise.common.util.TickThread.isTickThreadFor(e.level, ServerLevel.END_SPAWN_POINT.below())) net.minecraft.world.level.levelgen.feature.EndPlatformFeature.createEndPlatform(destination, ServerLevel.END_SPAWN_POINT.below(), true, null); } : teleportComplete; // Luminol - Add missing teleportation events & Fix teleportation api threading issue
          // Kaiiju end
  
          Vec3 initialPosition = this.position();
-@@ -4571,6 +4637,9 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
+@@ -4570,6 +4636,9 @@ public abstract class Entity implements SyncedDataHolder, Nameable, EntityAccess
                          tpComplete.accept(teleported);
                      }
                      // Kaiiju end
@@ -145,7 +145,7 @@ index 2f1aba87ced82e592511cebc24295aac95d71aaf..3aee378b03db39dd49a7afe5e762e063
              );
          });
 diff --git a/net/minecraft/world/level/block/entity/TheEndGatewayBlockEntity.java b/net/minecraft/world/level/block/entity/TheEndGatewayBlockEntity.java
-index 61887e6b052bca715c90dff5d9cd657e0b3f6a78..4f18340a99b141e15f74595282155bbd9632fb86 100644
+index 95e2dff6782bf7767ecb1a23e618862919ea71aa..386c38273e21ba6b48f9fad67fddc39255138e14 100644
 --- a/net/minecraft/world/level/block/entity/TheEndGatewayBlockEntity.java
 +++ b/net/minecraft/world/level/block/entity/TheEndGatewayBlockEntity.java
 @@ -193,6 +193,18 @@ public class TheEndGatewayBlockEntity extends TheEndPortalBlockEntity {
